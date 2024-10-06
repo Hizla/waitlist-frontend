@@ -55,10 +55,9 @@ export default function Home() {
       <div className="container">
         <HeroSection />
       </div>
-      <div className="bg-gradient-to-t from-white to-transparent backdrop-blur-sm">
-        <div className="bg-dot-black/[0.2] relative pt-24">
+      <div className="bg-gradient-to-t from-white to-transparent backdrop-blur-sm -mt-64">
+        <div className="bg-dot-black/[0.2] relative">
           <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_5%,black)]"></div>
-          <h4 className="text-4xl font-bold text-center">Features</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 py-10 container pl-1 pt-3">
             {features.map((feature, index) => (
               <FeatureCard key={feature.title} {...feature} index={index} />
