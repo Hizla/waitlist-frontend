@@ -5,43 +5,43 @@ import { Terminal } from "lucide-react";
 export default function Home() {
   const features = [
     {
-      title: "Built for developers",
+      title: "Easy Dashboard",
       description:
-        "Built for engineers, developers, dreamers, thinkers and doers.",
+        "Manage all your links and view analytics in a user-friendly, intuitive dashboard.",
       icon: <Terminal />,
     },
     {
-      title: "Ease of use",
+      title: "Advanced Analytics",
       description:
-        "It's as easy as using an Apple, and as expensive as buying one.",
+        "Get in-depth insights into who’s clicking on your links with advanced analytics.",
       icon: <Terminal />,
     },
     {
-      title: "Pricing like no other",
+      title: "Bulk Creation & Edit",
       description:
-        "Our prices are best in the market. No cap, no lock, no credit card required.",
+        "Easily create and edit multiple shortened links in bulk, saving you time and effort.",
       icon: <Terminal />,
     },
     {
-      title: "100% Uptime guarantee",
-      description: "We just cannot be taken down by anyone.",
+      title: "Meta Editing",
+      description: "Customize metadata like title, description, and image for better engagement on social platforms.",
       icon: <Terminal />,
     },
     {
-      title: "Multi-tenant Architecture",
-      description: "You can simply share passwords instead of buying new seats",
+      title: "Android & iOS Targeting",
+      description: "Direct users to different destinations based on their mobile device—Android or iOS.",
       icon: <Terminal />,
     },
     {
-      title: "24/7 Customer Support",
+      title: "Country Targeting",
       description:
-        "We are available a 100% of the time. Atleast our AI Agents are.",
+        "Send users from different countries to tailored destinations with country-level targeting.",
       icon: <Terminal />,
     },
     {
-      title: "Money back guarantee",
+      title: "Password Protection & Expiry Date",
       description:
-        "If you donot like EveryAI, we will convince you to like us.",
+        "Secure your links with passwords and set expiry dates to control link access.",
       icon: <Terminal />,
     },
     {
