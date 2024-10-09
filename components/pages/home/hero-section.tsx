@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 
 export default function HeroSection() {
   return (
-    <div className="min-h-[70vh] pt-40">
+    <div className="min-h-[70vh] pt-20">
       <div className="flex flex-col items-center relative z-50">
         <Badge variant="secondary" className="font-ibm">
           Simple as Never
