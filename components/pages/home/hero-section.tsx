@@ -1,9 +1,18 @@
+"use client";
+
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import WaitlistService from "@/service/waitlist";
+import { useQuery } from "@tanstack/react-query";
 
 export default function HeroSection() {
+  const { data, isPending } = useQuery({
+    queryKey: ["waitlist/count"],
+    queryFn: WaitlistService.getWaitlistMemberCount,
+  });
   return (
     <div className="min-h-[70vh] pt-20">
       <div className="flex flex-col items-center relative z-50">
@@ -34,21 +43,26 @@ export default function HeroSection() {
           waitlist to test our new product and enjoy free access to select paid
           features for a limited time. Be the first to explore!
         </p>
-        <div className="rounded-full h-9 flex items-center border-muted-foreground/25 bg-secondary border p-1 space-x-2 pr-2 mt-6">
-          <div className="-space-x-2 flex">
-            {Array.from({ length: 3 }).map((_, index) => (
-              <img
-                key={index}
-                src="https://thispersondoesnotexist.com/"
-                className="rounded-full w-6 h-6 ring ring-secondary"
-                alt=""
-              />
-            ))}
+        {isPending ? (
+          <Skeleton className="w-48 h-9 rounded-full mt-6" />
+        ) : (
+          <div className="rounded-full h-9 flex items-center border-muted-foreground/25 bg-secondary border p-1 space-x-2 pr-2 mt-6">
+            <div className="-space-x-2 flex">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <img
+                  key={index}
+                  src="https://thispersondoesnotexist.com/"
+                  className="rounded-full w-6 h-6 ring ring-secondary"
+                  alt=""
+                />
+              ))}
+            </div>
+            <span className="text-muted-foreground text-sm font-medium">
+              {data} Peoples Joined
+            </span>
           </div>
-          <span className="text-muted-foreground text-sm font-medium">
-            2k+ Peoples Joined
-          </span>
-        </div>
+        )}
+
         <div className="flex gap-2 pt-4 mt-2">
           <Input placeholder="Enter your email" className="w-96" />
           <Button variant="dark">Join Waitlist</Button>

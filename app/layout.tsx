@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
+import QueryProvider from "./query-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,8 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ibm.variable}`}>
       <body className={`${inter.className} antialiased`}>
-        <Header />
-        {children}
+        <QueryProvider>
+          <Header />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
