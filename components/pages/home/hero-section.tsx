@@ -13,10 +13,29 @@ import HCaptchaModal from "./HCaptchaModal";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 
+const waitlistFormSchema = z.object({
+  email: z.string().email(),
+});
+
+type WaitlistFormSchema = z.infer<typeof waitlistFormSchema>;
 export default function HeroSection() {
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
-  const [email, setEmail] = useState("");
+
+  const form = useForm<WaitlistFormSchema>({
+    resolver: zodResolver(waitlistFormSchema),
+    defaultValues: { email: "" },
+  });
 
   const { data, isPending } = useQuery({
     queryKey: ["waitlist/count"],
@@ -27,7 +46,7 @@ export default function HeroSection() {
     mutationFn: WaitlistService.joinWaitlist,
     onSuccess: () => {
       toast.success("You successfully joined the waitlist");
-      setEmail("");
+      form.reset();
     },
     onError: (error: AxiosError<{ message: string }>) => {
       toast.error(error.response?.data.message);
@@ -83,25 +102,38 @@ export default function HeroSection() {
             </span>
           </div>
         )}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(() => {
+              setIsCaptchaOpen(true);
+            })}
+            className="flex gap-2 pt-4 mt-2"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your email"
+                      className="w-96"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button disabled={isRegistiring} type="submit" variant="dark">
+              {isRegistiring && (
+                <Loader2 className="w-4 h-4 animate-spin mr-1" />
+              )}
+              Join Waitlist
+            </Button>
+          </form>
+        </Form>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setIsCaptchaOpen(true);
-          }}
-          className="flex gap-2 pt-4 mt-2"
-        >
-          <Input
-            placeholder="Enter your email"
-            className="w-96"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Button disabled={isRegistiring} type="submit" variant="dark">
-            {isRegistiring && <Loader2 className="w-4 h-4 animate-spin mr-1" />}
-            Join Waitlist
-          </Button>
-        </form>
         <div className="flex gap-2 mt-4">
           <Button size="icon" variant="outline">
             <svg
@@ -123,7 +155,10 @@ export default function HeroSection() {
           <HCaptchaModal
             setIsCaptchaOpen={setIsCaptchaOpen}
             onSuccess={(hcaptcha_token) => {
-              mutate({ email, hcaptcha_token });
+              mutate({
+                email: form.getValues("email"),
+                hcaptcha_token,
+              });
               setIsCaptchaOpen(false);
             }}
           />
