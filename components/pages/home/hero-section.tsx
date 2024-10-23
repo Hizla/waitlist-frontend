@@ -12,6 +12,7 @@ import { useState } from "react";
 import HCaptchaModal from "./HCaptchaModal";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { AxiosError } from "axios";
 
 export default function HeroSection() {
   const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
@@ -24,8 +25,12 @@ export default function HeroSection() {
 
   const { mutate, isPending: isRegistiring } = useMutation({
     mutationFn: WaitlistService.joinWaitlist,
-    onError: (error) => {
-      toast.error(error.message);
+    onSuccess: () => {
+      toast.success("You successfully joined the waitlist");
+      setEmail("");
+    },
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error.response?.data.message);
     },
   });
   return (
