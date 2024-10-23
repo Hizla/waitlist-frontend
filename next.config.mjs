@@ -1,13 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  rewrites: async () => {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "https://hizla.io/api/:path*",
-      },
-    ];
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;

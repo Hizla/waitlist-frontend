@@ -1,5 +1,5 @@
 import HeroSection from "@/components/pages/home/hero-section";
-import FeatureCard from "@/components/pages/home/layout-card";
+import FeatureCard from "@/components/pages/home/feature-card";
 import WaitlistService from "@/service/waitlist";
 import {
   dehydrate,

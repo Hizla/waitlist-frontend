@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
 import QueryProvider from "./query-provider";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
         <QueryProvider>
           <Header />
           {children}
+          <Toaster />
         </QueryProvider>
       </body>
     </html>

@@ -2,17 +2,15 @@ import Axios from "@axios";
 
 const WaitlistService = {
   getWaitlistMemberCount: () =>
-    Axios.get<number>(`/api/count`).then((res) => res.data),
+    Axios.get<number>(`/count`).then((res) => res.data),
   joinWaitlist: ({
     email,
-    hcaptcha_response,
+    hcaptcha_token,
   }: {
     email: string;
-    hcaptcha_response: string;
+    hcaptcha_token: string;
   }) =>
-    Axios.post(`/api/register`, { email, hcaptcha_response }).then(
-      (res) => res.data
-    ),
+    Axios.post(`/register`, { email, hcaptcha_token }).then((res) => res.data),
 };
 
 export default WaitlistService;

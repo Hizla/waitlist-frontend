@@ -6,12 +6,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import WaitlistService from "@/service/waitlist";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import HCaptchaModal from "./HCaptchaModal";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function HeroSection() {
+  const [isCaptchaOpen, setIsCaptchaOpen] = useState(false);
+  const [email, setEmail] = useState("");
+
   const { data, isPending } = useQuery({
     queryKey: ["waitlist/count"],
     queryFn: WaitlistService.getWaitlistMemberCount,
+  });
+
+  const { mutate, isPending: isRegistiring } = useMutation({
+    mutationFn: WaitlistService.joinWaitlist,
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
   return (
     <div className="min-h-[70vh] pt-20">
@@ -58,15 +73,30 @@ export default function HeroSection() {
               ))}
             </div>
             <span className="text-muted-foreground text-sm font-medium">
-              {data} Peoples Joined
+              {data && data > 999 ? `${(data / 1000).toFixed(1)}K` : data}+
+              Peoples Joined
             </span>
           </div>
         )}
 
-        <div className="flex gap-2 pt-4 mt-2">
-          <Input placeholder="Enter your email" className="w-96" />
-          <Button variant="dark">Join Waitlist</Button>
-        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setIsCaptchaOpen(true);
+          }}
+          className="flex gap-2 pt-4 mt-2"
+        >
+          <Input
+            placeholder="Enter your email"
+            className="w-96"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button disabled={isRegistiring} type="submit" variant="dark">
+            {isRegistiring && <Loader2 className="w-4 h-4 animate-spin mr-1" />}
+            Join Waitlist
+          </Button>
+        </form>
         <div className="flex gap-2 mt-4">
           <Button size="icon" variant="outline">
             <svg
@@ -83,6 +113,17 @@ export default function HeroSection() {
         </div>
       </div>
       <BackgroundBeams />
+      <AnimatePresence>
+        {isCaptchaOpen && (
+          <HCaptchaModal
+            setIsCaptchaOpen={setIsCaptchaOpen}
+            onSuccess={(hcaptcha_token) => {
+              mutate({ email, hcaptcha_token });
+              setIsCaptchaOpen(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
