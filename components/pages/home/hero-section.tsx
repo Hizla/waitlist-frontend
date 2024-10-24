@@ -56,22 +56,24 @@ export default function HeroSection() {
     },
   });
   return (
-    <div className="min-h-[70vh] pt-20">
-      <div className="flex flex-col items-center relative z-50">
+    <div className="min-h-[70vh] pt-10 md:pt-20">
+      <div className="flex flex-col items-center relative z-50 sm:p-0 p-2">
         <Badge variant="secondary" className="font-ibm">
           Simple as Never
         </Badge>
-        <h2 className="text-5xl text-center font-bold leading-snug">
+        <h2 className="text-3xl md:text-5xl text-center font-bold leading-tight md:leading-snug">
           Analytics were complicated <br /> so we hit{" "}
           <span className="relative">
-            <img
+            <Image
               style={{
                 filter: "drop-shadow(0px 1000px 0 #FFC300)",
                 transform: "translateY(-1000px)",
               }}
-              className="absolute -top-7 left-0 w-[220%] h-[220%]"
-              src="https://2.bp.blogspot.com/-CJzyIpsXrR8/VaakNgVIzeI/AAAAAAAAJv0/U0IlTFJK-Bs/s1600/2015-06-27%252525252022.10.31.png"
-              alt=""
+              className="absolute -top-5 md:-top-7 left-0 w-[220%] h-[220%]"
+              width={640}
+              height={339}
+              src="/brush-stroke.png"
+              alt="Brush Stroke"
             />
             <span className="relative z-10">‘shorten’</span>{" "}
           </span>
@@ -80,7 +82,7 @@ export default function HeroSection() {
             breeze!
           </span>
         </h2>
-        <p className="text-center max-w-2xl text-muted-foreground mt-2">
+        <p className="text-center max-w-2xl text-muted-foreground mt-2 md:text-base text-sm">
           <span className="font-medium">Beta Members Wanted!</span> Join our
           waitlist to test our new product and enjoy free access to select paid
           features for a limited time. Be the first to explore!
@@ -132,7 +134,7 @@ export default function HeroSection() {
                   <FormControl>
                     <Input
                       placeholder="Enter your email"
-                      className="w-96"
+                      className="w-full md:w-96"
                       {...field}
                     />
                   </FormControl>
