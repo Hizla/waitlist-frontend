@@ -156,6 +156,8 @@ export default function HeroSection() {
             shimmerSize="0.1em"
             shimmerColor="#FFC300"
             className="shadow-2xl px-4 py-2"
+            as="a"
+            href="https://github.com/Hizla"
           >
             <span className="flex whitespace-pre-wrap text-center text-xs font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 items-center font-mono gap-2">
               <span className="hidden md:inline">Checkout our</span>Github
