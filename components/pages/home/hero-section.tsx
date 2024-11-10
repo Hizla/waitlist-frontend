@@ -48,7 +48,8 @@ export default function HeroSection() {
   const { mutate, isPending: isRegistiring } = useMutation({
     mutationFn: WaitlistService.joinWaitlist,
     onSuccess: () => {
-      toast.success("You successfully joined the waitlist");
+      WaitlistService.sendConfirmationEmail(form.getValues('email'));
+      toast.success("You successfully joined the waitlist. Check your inbox!");
       form.reset();
     },
     onError: (error: AxiosError<{ message: string }>) => {
@@ -83,9 +84,7 @@ export default function HeroSection() {
           </span>
         </h2>
         <p className="text-center max-w-2xl text-muted-foreground mt-2 md:text-base text-sm">
-          <span className="font-medium">Beta Members Wanted!</span> Join our
-          waitlist to test our new product and enjoy free access to select paid
-          features for a limited time. Be the first to explore!
+          <span className="font-medium">fully open-source,</span> combining powerful link shortening with real-time analytics to help you optimize your links effortlessly.
         </p>
         {isPending && <Skeleton className="w-48 h-9 rounded-full mt-6" />}
         {data && (

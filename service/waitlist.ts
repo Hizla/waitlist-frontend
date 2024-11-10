@@ -11,6 +11,9 @@ const WaitlistService = {
     hcaptcha_token: string;
   }) =>
     Axios.post(`/api/register`, { email, hcaptcha_token }).then((res) => res.data),
+    sendConfirmationEmail: (address: string) => Axios.post(`/api/resend`, { email: address }, {
+    baseURL: "",
+  })
 };
 
 export default WaitlistService;
